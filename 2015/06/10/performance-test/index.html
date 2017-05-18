@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>性能测试 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="性能测试," />
+  
+
+  <meta name="description" content="性能测试工具
+
+http_load
+webbench
+ab
+siege
+
+http_load
+参数:
+
+-parallel 简写-p ：含义是并发的用户进程数。
+-fetches 简写-f ：含义是总计的访问次数
+-rate 简写-r ：含义是每秒的访问频率
+-seconds简写-s ：含义是总计的访问时间
+
+实例:
+
+http_load -r 100 -s 10 url-file # 每秒100">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能测试">
+<meta property="og:url" content="http://nextkitt.github.io/2015/06/10/performance-test/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="性能测试工具
+
+http_load
+webbench
+ab
+siege
+
+http_load
+参数:
+
+-parallel 简写-p ：含义是并发的用户进程数。
+-fetches 简写-f ：含义是总计的访问次数
+-rate 简写-r ：含义是每秒的访问频率
+-seconds简写-s ：含义是总计的访问时间
+
+实例:
+
+http_load -r 100 -s 10 url-file # 每秒100">
+<meta property="og:updated_time" content="2017-05-18T14:17:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能测试">
+<meta name="twitter:description" content="性能测试工具
+
+http_load
+webbench
+ab
+siege
+
+http_load
+参数:
+
+-parallel 简写-p ：含义是并发的用户进程数。
+-fetches 简写-f ：含义是总计的访问次数
+-rate 简写-r ：含义是每秒的访问频率
+-seconds简写-s ：含义是总计的访问时间
+
+实例:
+
+http_load -r 100 -s 10 url-file # 每秒100">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#http-load"><span class="toc-text">http_load</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-performance-test" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">性能测试</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.06.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/后端/">后端</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>性能测试工具</p>
+<ul>
+<li><a href="http://acme.com/software/http_load/" target="_blank" rel="external">http_load</a></li>
+<li><a href="http://soft.vpser.net/test/webbench/" target="_blank" rel="external">webbench</a></li>
+<li><a href="http://httpd.apache.org/docs/2.2/programs/ab.html" target="_blank" rel="external">ab</a></li>
+<li><a href="https://www.joedog.org/" target="_blank" rel="external">siege</a></li>
+</ul>
+<h4 id="http-load"><a href="#http-load" class="headerlink" title="http_load"></a><a href="http://acme.com/software/http_load/" target="_blank" rel="external">http_load</a></h4><blockquote>
+<p>参数:</p>
+</blockquote>
+<pre><code>-parallel 简写-p ：含义是并发的用户进程数。
+-fetches 简写-f ：含义是总计的访问次数
+-rate 简写-r ：含义是每秒的访问频率
+-seconds简写-s ：含义是总计的访问时间
+</code></pre><blockquote>
+<p>实例:</p>
+</blockquote>
+<pre><code>http_load -r 100 -s 10 url-file # 每秒100次请求，持续10秒
+</code></pre><blockquote>
+<p>结果解析</p>
+</blockquote>
+<pre><code>$ http_load -rate 5 -seconds 10 urls
+49 fetches, 2 max parallel, 289884 bytes, in 10.0148 seconds
+5916 mean bytes/connection
+4.89274 fetches/sec, 28945.5 bytes/sec
+msecs/connect: 28.8932 mean, 44.243 max, 24.488 min
+msecs/first-response: 63.5362 mean, 81.624 max, 57.803 min
+HTTP response codes:
+code 200 — 49
+</code></pre><blockquote>
+<p>性能指标</p>
+</blockquote>
+<p>fetches/sec - Qpt 每秒响应用户数<br>msecs/connect - response time 每个连接响应用户时间</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://soft.vpser.net/test/" target="_blank" rel="external">下载地址集合</a></li>
+<li><a href="http://othellovps.com/vps-tutorials/web-server-performance-pressure-test-tool-http_load-webbench-ab-siege-tutorials.html" target="_blank" rel="external">Web Server Performance Pressure Test Tool http_load webbench AB Siege Tutorials</a></li>
+</ul>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/06/08/nginx-log/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/06/10/centos-yum/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

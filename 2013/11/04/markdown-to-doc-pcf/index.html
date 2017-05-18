@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>markdown转换为PDF | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="markdown,pdf," />
+  
+
+  <meta name="description" content="markdown+css转换成pdf有多种方式：
+
+pandoc
+prince
+
+本文记录使用prince的过程
+安装prince(ubuntu)1sudo aptitude install prince
+使用prince以 zybuluo.com 的markdown文档为例
+123pandoc -s -S -c markdown.ooo.css zybuluo.com.markdown -o z">
+<meta property="og:type" content="article">
+<meta property="og:title" content="markdown转换为PDF">
+<meta property="og:url" content="http://nextkitt.github.io/2013/11/04/markdown-to-doc-pcf/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="markdown+css转换成pdf有多种方式：
+
+pandoc
+prince
+
+本文记录使用prince的过程
+安装prince(ubuntu)1sudo aptitude install prince
+使用prince以 zybuluo.com 的markdown文档为例
+123pandoc -s -S -c markdown.ooo.css zybuluo.com.markdown -o z">
+<meta property="og:updated_time" content="2017-05-18T14:07:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="markdown转换为PDF">
+<meta name="twitter:description" content="markdown+css转换成pdf有多种方式：
+
+pandoc
+prince
+
+本文记录使用prince的过程
+安装prince(ubuntu)1sudo aptitude install prince
+使用prince以 zybuluo.com 的markdown文档为例
+123pandoc -s -S -c markdown.ooo.css zybuluo.com.markdown -o z">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装prince-ubuntu"><span class="toc-text">安装prince(ubuntu)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用prince"><span class="toc-text">使用prince</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#markdown的css资源"><span class="toc-text">markdown的css资源</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-markdown-to-doc-pcf" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">markdown转换为PDF</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.11.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/工具/">工具</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><code>markdown+css</code>转换成pdf有多种方式：</p>
+<ol>
+<li><a href="http://johnmacfarlane.net/pandoc/" target="_blank" rel="external">pandoc</a></li>
+<li><a href="http://www.princexml.com/" target="_blank" rel="external">prince</a></li>
+</ol>
+<p>本文记录使用<a href="http://www.princexml.com/" target="_blank" rel="external">prince</a>的过程</p>
+<h2 id="安装prince-ubuntu"><a href="#安装prince-ubuntu" class="headerlink" title="安装prince(ubuntu)"></a>安装prince(ubuntu)</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo aptitude <span class="keyword">install</span> prince</div></pre></td></tr></table></figure>
+<h2 id="使用prince"><a href="#使用prince" class="headerlink" title="使用prince"></a>使用prince</h2><p>以 <a href="http://www.zybuluo.com/mdeditor" target="_blank" rel="external">zybuluo.com</a> 的<a href="/asset/markdown/zybuluo.com.markdown">markdown文档</a>为例</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pandoc -s -S -c markdown<span class="selector-class">.ooo</span><span class="selector-class">.css</span> zybuluo<span class="selector-class">.com</span><span class="selector-class">.markdown</span> -o zybuluo<span class="selector-class">.com</span><span class="selector-class">.markdown</span><span class="selector-class">.html</span></div><div class="line">prince zybuluo<span class="selector-class">.com</span><span class="selector-class">.markdown</span><span class="selector-class">.html</span> -o zybuluo<span class="selector-class">.com</span><span class="selector-class">.markdown</span><span class="selector-class">.css</span><span class="selector-class">.html</span><span class="selector-class">.pdf</span></div><div class="line">prince --disallow-annotate --disallow-modify --pdf-subject=<span class="string">"markdown+css to pdf"</span> zybuluo<span class="selector-class">.com</span><span class="selector-class">.markdown</span><span class="selector-class">.html</span> -o zybuluo<span class="selector-class">.com</span><span class="selector-class">.markdown</span><span class="selector-class">.css</span><span class="selector-class">.html</span><span class="selector-class">.pdf</span></div></pre></td></tr></table></figure>
+<p>实例中的：</p>
+<ul>
+<li><a href="/asset/markdown/markdown.ooo.css">markdown.ooo.css</a></li>
+<li><a href="/asset/markdown/zybuluo.com.markdown.html">zybuluo.com.markdown.html</a></li>
+<li><a href="/asset/markdown/zybuluo.com.markdown.pdf">zybuluo.com.markdown.pdf</a></li>
+</ul>
+<h3 id="markdown的css资源"><a href="#markdown的css资源" class="headerlink" title="markdown的css资源"></a>markdown的css资源</h3><ul>
+<li><a href="https://github.com/jasonm23/markdown-css-themes" target="_blank" rel="external">jasonm23/markdown-css-themes</a></li>
+<li><a href="https://github.com/mrcoles/markdown-css" target="_blank" rel="external">mrcoles/markdown-css</a></li>
+<li><a href="http://jasonm23.github.io/markdown-css-themes/" target="_blank" rel="external">jasonm23.github.io/markdown-css-themes/</a></li>
+<li><a href="http://kevinburke.bitbucket.org/markdowncss/" target="_blank" rel="external">kevinburke.bitbucket.org/markdowncss/</a></li>
+<li><a href="https://bitbucket.org/kevinburke/markdowncss" target="_blank" rel="external">kevinburke / markdowncss — Bitbucket</a></li>
+<li><a href="http://markdown.tw/resources.html" target="_blank" rel="external">Markdown 语法说明</a></li>
+<li><a href="https://github.com/mixu/markdown-styles" target="_blank" rel="external">mixu/markdown-styles</a></li>
+<li><a href="https://github.com/nswbmw/markdown-css" target="_blank" rel="external">nswbmw/markdown-css</a></li>
+<li>本文使用的<a href="/asset/markdown/markdown.ooo.css">markdown.ooo.css</a></li>
+</ul>
+<!--[jasonm23/markdown-css-themes]: https://github.com/jasonm23/markdown-css-themes-->
+<!--[mrcoles/markdown-css]: https://github.com/mrcoles/markdown-css-->
+<!--[jasonm23.github.io/markdown-css-themes/]: http://jasonm23.github.io/markdown-css-themes/-->
+<!--[kevinburke.bitbucket.org/markdowncss/]: http://kevinburke.bitbucket.org/markdowncss/-->
+<!--[kevinburke / markdowncss — Bitbucket]: https://bitbucket.org/kevinburke/markdowncss-->
+<!--[Markdown 語法說明]: http://markdown.tw/resources.html-->
+<!--[mixu/markdown-styles]: https://github.com/mixu/markdown-styles-->
+<!--[nswbmw/markdown-css]: https://github.com/nswbmw/markdown-css-->
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/11/03/svn-diff-vim/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2013/11/19/shell-sed/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

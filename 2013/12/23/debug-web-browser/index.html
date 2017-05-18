@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>导出浏览器chrome和firefox的debug信息 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="chrome,Web," />
+  
+
+  <meta name="description" content="如何导出浏览器chrome和firefox的firebug调试信息
+1 chrome按F12或在页面空白处按鼠标右键选择审查元素进入调试模式, 点击network，然后右键选择Save as HAR with Content保存到文件就可以了。
+
+详细见：export chrom developer data
+2 firefox详细见：export firebug data
+3 HARHAR就是H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="导出浏览器chrome和firefox的debug信息">
+<meta property="og:url" content="http://nextkitt.github.io/2013/12/23/debug-web-browser/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="如何导出浏览器chrome和firefox的firebug调试信息
+1 chrome按F12或在页面空白处按鼠标右键选择审查元素进入调试模式, 点击network，然后右键选择Save as HAR with Content保存到文件就可以了。
+
+详细见：export chrom developer data
+2 firefox详细见：export firebug data
+3 HARHAR就是H">
+<meta property="og:image" content="http://nextkitt.github.io/build/architecture-design/test/chrom-debug.png">
+<meta property="og:updated_time" content="2017-05-18T14:09:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="导出浏览器chrome和firefox的debug信息">
+<meta name="twitter:description" content="如何导出浏览器chrome和firefox的firebug调试信息
+1 chrome按F12或在页面空白处按鼠标右键选择审查元素进入调试模式, 点击network，然后右键选择Save as HAR with Content保存到文件就可以了。
+
+详细见：export chrom developer data
+2 firefox详细见：export firebug data
+3 HARHAR就是H">
+<meta name="twitter:image" content="http://nextkitt.github.io/build/architecture-design/test/chrom-debug.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-chrome"><span class="toc-text">1 chrome</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-firefox"><span class="toc-text">2 firefox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HAR"><span class="toc-text">3 HAR</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-debug-web-browser" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">导出浏览器chrome和firefox的debug信息</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.12.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/工具/">工具</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>如何导出浏览器chrome和firefox的firebug调试信息</p>
+<h3 id="1-chrome"><a href="#1-chrome" class="headerlink" title="1 chrome"></a>1 chrome</h3><p>按<code>F12</code>或在页面空白处按鼠标右键选择<code>审查元素</code>进入调试模式, 点击<code>network</code>，然后右键选择<code>Save as HAR with Content</code>保存到文件就可以了。</p>
+<p><img src="/build/architecture-design/test/chrom-debug.png" alt="导出chrome调试信息"></p>
+<p>详细见：<a href="http://stackoverflow.com/questions/7521942/export-data-from-chrome-developer-tool" target="_blank" rel="external">export chrom developer data</a></p>
+<h3 id="2-firefox"><a href="#2-firefox" class="headerlink" title="2 firefox"></a>2 firefox</h3><p>详细见：<a href="http://www.softwareishard.com/blog/netexport/" target="_blank" rel="external">export firebug data</a></p>
+<h3 id="3-HAR"><a href="#3-HAR" class="headerlink" title="3 HAR"></a>3 HAR</h3><p><a href="http://en.wikipedia.org/wiki/.har" target="_blank" rel="external">HAR</a>就是<a href="http://www.softwareishard.com/blog/har-viewer/" target="_blank" rel="external">HTTP Archive</a>。W3C规定了<a href="https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HAR/Overview.html" target="_blank" rel="external">HAR的格式</a>。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/12/19/shell-time/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2013/12/23/shell-here-document/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

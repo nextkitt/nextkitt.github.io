@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>CentOS yum 使用笔记 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="yum," />
+  
+
+  <meta name="description" content="yum [options] [command] [package …]
+常用options
+-y 当安装过程提示选择全部为”yes”
+-q 运行过程不打印日志
+-v 运行过程打印详细日志
+
+安装软件包yum install package-name
+如：
+yum install httpd-tools
+查询是否安装过某软件包yum list |grep package-name
+如：
+yum li">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS yum 使用笔记">
+<meta property="og:url" content="http://nextkitt.github.io/2015/06/10/centos-yum/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="yum [options] [command] [package …]
+常用options
+-y 当安装过程提示选择全部为”yes”
+-q 运行过程不打印日志
+-v 运行过程打印详细日志
+
+安装软件包yum install package-name
+如：
+yum install httpd-tools
+查询是否安装过某软件包yum list |grep package-name
+如：
+yum li">
+<meta property="og:updated_time" content="2017-05-18T14:16:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS yum 使用笔记">
+<meta name="twitter:description" content="yum [options] [command] [package …]
+常用options
+-y 当安装过程提示选择全部为”yes”
+-q 运行过程不打印日志
+-v 运行过程打印详细日志
+
+安装软件包yum install package-name
+如：
+yum install httpd-tools
+查询是否安装过某软件包yum list |grep package-name
+如：
+yum li">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用options"><span class="toc-text">常用options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装软件包"><span class="toc-text">安装软件包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询是否安装过某软件包"><span class="toc-text">查询是否安装过某软件包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询某软件包中包含哪些文件"><span class="toc-text">查询某软件包中包含哪些文件</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-centos-yum" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">CentOS yum 使用笔记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.06.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>yum [options] [command] [package …]</p>
+<h4 id="常用options"><a href="#常用options" class="headerlink" title="常用options"></a>常用options</h4><ul>
+<li>-y 当安装过程提示选择全部为”yes”</li>
+<li>-q 运行过程不打印日志</li>
+<li>-v 运行过程打印详细日志</li>
+</ul>
+<h4 id="安装软件包"><a href="#安装软件包" class="headerlink" title="安装软件包"></a>安装软件包</h4><pre><code>yum install package-name
+</code></pre><p>如：</p>
+<pre><code>yum install httpd-tools
+</code></pre><h4 id="查询是否安装过某软件包"><a href="#查询是否安装过某软件包" class="headerlink" title="查询是否安装过某软件包"></a>查询是否安装过某软件包</h4><pre><code>yum list |grep package-name
+</code></pre><p>如：</p>
+<pre><code>yum list |grep httpd-tools
+</code></pre><h4 id="查询某软件包中包含哪些文件"><a href="#查询某软件包中包含哪些文件" class="headerlink" title="查询某软件包中包含哪些文件"></a>查询某软件包中包含哪些文件</h4><p>使用<code>yum-utils</code>中的<code>repoquery</code>命令，首先安装<code>yum-utils</code></p>
+<pre><code>yum install yum-utils
+</code></pre><p>查询： </p>
+<pre><code>repoquery --list package-name
+</code></pre><p>如：</p>
+<pre><code>repoquery --list httpd-tools
+/usr/bin/ab
+/usr/bin/htdbm
+/usr/bin/htdigest
+/usr/bin/htpasswd
+/usr/bin/logresolve
+/usr/share/doc/httpd-tools-2.2.15
+/usr/share/doc/httpd-tools-2.2.15/LICENSE
+/usr/share/man/man1/ab.1.gz
+/usr/share/man/man1/htdbm.1.gz
+/usr/share/man/man1/htdigest.1.gz
+/usr/share/man/man1/htpasswd.1.gz
+/usr/share/man/man1/logresolve.1.gz
+</code></pre>
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/06/10/performance-test/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

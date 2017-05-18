@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell - awk | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="shell,awk," />
+  
+
+  <meta name="description" content="awk 常用变量
+NR 全局行数(第二个文件第一行接着第一个文件尾行顺序计数)
+FNR 当前文件自身的行数
+NF 总字段数
+FS 字段分隔符
+OFS 输出字段分隔符
+ORS 输出记录分隔符
+
+awk 基本操作awk多个分隔符统计Web Server条日志的时分秒，
+echo &amp;apos;127.0.0.1 - - [22/May/2013:10:22:57 +0800] &amp;quot;GET / H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell - awk">
+<meta property="og:url" content="http://nextkitt.github.io/2013/11/19/shell-awk/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="awk 常用变量
+NR 全局行数(第二个文件第一行接着第一个文件尾行顺序计数)
+FNR 当前文件自身的行数
+NF 总字段数
+FS 字段分隔符
+OFS 输出字段分隔符
+ORS 输出记录分隔符
+
+awk 基本操作awk多个分隔符统计Web Server条日志的时分秒，
+echo &amp;apos;127.0.0.1 - - [22/May/2013:10:22:57 +0800] &amp;quot;GET / H">
+<meta property="og:updated_time" content="2017-05-18T14:08:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell - awk">
+<meta name="twitter:description" content="awk 常用变量
+NR 全局行数(第二个文件第一行接着第一个文件尾行顺序计数)
+FNR 当前文件自身的行数
+NF 总字段数
+FS 字段分隔符
+OFS 输出字段分隔符
+ORS 输出记录分隔符
+
+awk 基本操作awk多个分隔符统计Web Server条日志的时分秒，
+echo &amp;apos;127.0.0.1 - - [22/May/2013:10:22:57 +0800] &amp;quot;GET / H">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#awk-常用变量"><span class="toc-text">awk 常用变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk-基本操作"><span class="toc-text">awk 基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk多个分隔符"><span class="toc-text">awk多个分隔符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk调用shell命令"><span class="toc-text">awk调用shell命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk引用shell变量"><span class="toc-text">awk引用shell变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk数组的用法"><span class="toc-text">awk数组的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk数组针对字符串的用法"><span class="toc-text">awk数组针对字符串的用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#awk数组针对数字的用法"><span class="toc-text">awk数组针对数字的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk匹配"><span class="toc-text">awk匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk行匹配"><span class="toc-text">awk行匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#awk列匹配"><span class="toc-text">awk列匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk-内建函数"><span class="toc-text">awk 内建函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk比较字符串和数字"><span class="toc-text">awk比较字符串和数字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#awk-分拣文件"><span class="toc-text">awk 分拣文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-shell-awk" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">shell - awk</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.11.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="awk-常用变量"><a href="#awk-常用变量" class="headerlink" title="awk 常用变量"></a>awk 常用变量</h2><ol>
+<li>NR 全局行数(第二个文件第一行接着第一个文件尾行顺序计数)</li>
+<li>FNR 当前文件自身的行数</li>
+<li>NF 总字段数</li>
+<li>FS 字段分隔符</li>
+<li>OFS 输出字段分隔符</li>
+<li>ORS 输出记录分隔符</li>
+</ol>
+<h2 id="awk-基本操作"><a href="#awk-基本操作" class="headerlink" title="awk 基本操作"></a>awk 基本操作</h2><h3 id="awk多个分隔符"><a href="#awk多个分隔符" class="headerlink" title="awk多个分隔符"></a>awk多个分隔符</h3><p>统计Web Server条日志的时分秒，</p>
+<pre><code>echo &apos;127.0.0.1 - - [22/May/2013:10:22:57 +0800] &quot;GET / HTTP/1.1&quot; 200 502&apos; | awk -F&apos;[: ]&apos; &apos;{print $5&quot;:&quot;$6&quot;:&quot;$7}&apos;
+</code></pre><h2 id="awk调用shell命令"><a href="#awk调用shell命令" class="headerlink" title="awk调用shell命令"></a>awk调用shell命令</h2><p>第一种方式是 <code>system(&quot;cmd&quot;)</code>，第二种方式是<code>&quot;cmd&quot;|getline var</code>； system()的缺点是,无法获取命令的输出，它只返回cmd的退出码；而getline可以获取命令的输出。对 date 命令的调用：</p>
+<pre><code>echo &quot;05 Sep 2012 18:25:40&quot;| awk &apos;{sprintf(&quot;date -d \&quot;%s\&quot; +%%s&quot;, $0) | getline tm;print tm}&apos;
+echo &quot;05 Sep 2012 18:25:40&quot;| awk &apos;{cmd=sprintf(&quot;date -d \&quot;%s\&quot; +%%s&quot;, $0); cmd| getline tm;print tm; close(cmd&quot;|getlined)}&apos;
+</code></pre><p>这里的 close必须，因为awk使用一个内部管道就占用一个文件描述符，当使用描述符超过上线时就会报错，所以这里必须close；而且close的参数要和指定的shell命令完全一样，否则awk视为两个不同的管道，通常的做法是：先将shell命令赋值给一个临时变量，执行这个临时变量,然后close它。</p>
+<pre><code>#使用 awk 把第一列时间字符串字段 转换为时间戳输出
+echo &quot;10:00:00&quot; | awk &apos;{system(&quot;/bin/date -d &quot;$1&quot; +%s&quot; &quot;%Y-%m-%d&quot; &quot;%H:%M:%S&quot;)}&apos;
+
+#使用 awk 把第一列时间字符串字段 转换为时间戳输出
+echo &quot;10:00:00&quot; | awk &apos;{print &quot;/bin/date -d &quot;$1&quot; +%s&quot; &quot;%Y-%m-%d&quot; &quot;%H:%M:%S&quot;|&quot;/bin/bash&quot;}&apos;
+</code></pre><h2 id="awk引用shell变量"><a href="#awk引用shell变量" class="headerlink" title="awk引用shell变量"></a>awk引用shell变量</h2><pre><code>#打印出 /etc/passwd 第一列为 &quot;root&quot; 的行
+un=&quot;root&quot;; awk -F&apos;:&apos; &apos;{if($1==t_un){print $0}}&apos; t_un=${un} /etc/passwd
+
+#打印出 /etc/passwd 第一列为 &quot;root&quot; 的行
+un=&quot;root&quot;; ubash=&quot;/bin/bash&quot;; awk -F&apos;:&apos; -v t_un=${un} -v t_ubash=${ubash} &apos;{if($1==t_un &amp;&amp; $NF==t_ubash){print $0}}&apos; /etc/passwd
+un=&quot;root&quot;; awk -F&apos;:&apos; &apos;{if($1 ~ /^&apos;&quot;$un&quot;&apos;$/){print $0}}&apos; t_un=${un} /etc/passwd
+</code></pre><h2 id="awk数组的用法"><a href="#awk数组的用法" class="headerlink" title="awk数组的用法"></a>awk数组的用法</h2><h3 id="awk数组针对字符串的用法"><a href="#awk数组针对字符串的用法" class="headerlink" title="awk数组针对字符串的用法"></a>awk数组针对字符串的用法</h3><pre><code>#统计 /etc/passwd 那些用户使用同样的shell
+awk -F&apos;:&apos; &apos;{arr[$7]=arr[$7]&quot; &quot;$1;}END{for (k in arr) {print k, arr[k]}}&apos; /etc/passwd
+</code></pre><h3 id="awk数组针对数字的用法"><a href="#awk数组针对数字的用法" class="headerlink" title="awk数组针对数字的用法"></a>awk数组针对数字的用法</h3><pre><code>#统计 /etc/passwd 第3列的和
+awk -F&apos;:&apos; &apos;{sum+=$3}END{print sum}&apos; /etc/passwd
+</code></pre><h2 id="awk匹配"><a href="#awk匹配" class="headerlink" title="awk匹配"></a>awk匹配</h2><h3 id="awk行匹配"><a href="#awk行匹配" class="headerlink" title="awk行匹配"></a>awk行匹配</h3><pre><code>#打印出 /etc/passwd 的10到20行
+cat -n /etc/passwd | awk -F&apos;:&apos; &apos;NR&gt;=10 &amp;&amp; NR&lt;=20 {print $0}&apos;
+
+#打印出 /etc/passwd 的10到20行中包含字符串 &quot;ftp&quot; 的行
+cat -n /etc/passwd | awk -F&apos;:&apos; &apos;NR&gt;=10 &amp;&amp; NR&lt;=20 &amp;&amp; /ftp/ {print $0}&apos;
+
+#打印出 /etc/passwd 的10到20行中 以/bin/sh结尾的行
+cat -n /etc/passwd | awk -F&apos;:&apos; &apos;NR&gt;=10 &amp;&amp; NR&lt;=20 &amp;&amp; /\/bin\/bash$/ {print $0}&apos;
+</code></pre><h3 id="awk列匹配"><a href="#awk列匹配" class="headerlink" title="awk列匹配"></a>awk列匹配</h3><pre><code>#匹配 /etc/passwd 用户名
+</code></pre><h2 id="awk-内建函数"><a href="#awk-内建函数" class="headerlink" title="awk 内建函数"></a>awk 内建函数</h2><h3 id="awk比较字符串和数字"><a href="#awk比较字符串和数字" class="headerlink" title="awk比较字符串和数字"></a>awk比较字符串和数字</h3><pre><code>cat /etc/passwd | awk -F&apos;:&apos; &apos;{if($3&gt;&quot;1000&quot;){print $3}}&apos;  #比较字符串
+cat /etc/passwd | awk -F&apos;:&apos; &apos;{if($3&gt;1000){print $3}}&apos;  #比较数字
+</code></pre><h3 id="awk-分拣文件"><a href="#awk-分拣文件" class="headerlink" title="awk 分拣文件"></a>awk 分拣文件</h3><pre><code>head  /var/log/messages | awk &apos;{print $0 &gt; $1&quot;_&quot;$2&quot;_&quot;$3&quot;.log&quot;}&apos;
+ls
+Feb_24_07:56:02.log  Feb_25_07:35:30.log  Feb_25_11:33:06.log  Feb_25_12:32:10.log
+</code></pre><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://man.lupaworld.com/content/manage/ringkee/awk.htm" target="_blank" rel="external">肥猫的awk学习笔记</a></li>
+<li><a href="http://man.linuxde.net/awk" target="_blank" rel="external">awk命令详解</a></li>
+</ul>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/11/19/shell-sed/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2013/12/19/shell-time/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

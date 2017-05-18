@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>nginx log 分析常用方法 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nginx," />
+  
+
+  <meta name="description" content="按时段统计某uri的累积访问次数这里按10分钟为时间单位
+access.log 实例 
+114.246.69.125 &amp;quot;-&amp;quot; - [08/Jun/2015:23:46:01 +0800] &amp;quot;GET / HTTP/1.1&amp;quot; 304 0 &amp;quot;-&amp;quot; &amp;quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx log 分析常用方法">
+<meta property="og:url" content="http://nextkitt.github.io/2015/06/08/nginx-log/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="按时段统计某uri的累积访问次数这里按10分钟为时间单位
+access.log 实例 
+114.246.69.125 &amp;quot;-&amp;quot; - [08/Jun/2015:23:46:01 +0800] &amp;quot;GET / HTTP/1.1&amp;quot; 304 0 &amp;quot;-&amp;quot; &amp;quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_1">
+<meta property="og:updated_time" content="2017-05-18T14:16:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx log 分析常用方法">
+<meta name="twitter:description" content="按时段统计某uri的累积访问次数这里按10分钟为时间单位
+access.log 实例 
+114.246.69.125 &amp;quot;-&amp;quot; - [08/Jun/2015:23:46:01 +0800] &amp;quot;GET / HTTP/1.1&amp;quot; 304 0 &amp;quot;-&amp;quot; &amp;quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_1">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#按时段统计某uri的累积访问次数"><span class="toc-text">按时段统计某uri的累积访问次数</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-nginx-log" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">nginx log 分析常用方法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.06.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a> / <a class="article-category-link" href="/categories/Linux/后端/">后端</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="按时段统计某uri的累积访问次数"><a href="#按时段统计某uri的累积访问次数" class="headerlink" title="按时段统计某uri的累积访问次数"></a>按时段统计某uri的累积访问次数</h4><p>这里按10分钟为时间单位</p>
+<p>access.log 实例 </p>
+<pre><code>114.246.69.125 &quot;-&quot; - [08/Jun/2015:23:46:01 +0800] &quot;GET / HTTP/1.1&quot; 304 0 &quot;-&quot; &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36&quot; &quot;0.000&quot; &quot;nextkitt.com&quot;
+114.246.69.125 &quot;-&quot; - [08/Jun/2015:23:46:01 +0800] &quot;GET /images/avatar.png?size=normal HTTP/1.1&quot; 304 0 &quot;-&quot; &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36&quot; &quot;0.000&quot; &quot;nextkitt.com&quot;
+</code></pre><p>分析脚本</p>
+<pre><code>#!/bin/bash
+
+:&lt;&lt; COMMENT
+按10分钟为时间单位，思路：
+以time拼接uri作为awk数组的key统计累计访问量，
+在END{}中把提取time和uri，把time转换为时间戳，
+打印最终输出结果
+
+注意: time放在END{}中处理的好处在于提高处理速度
+
+对时间的处理:
+
+[08/Jun/2015:23:46:01
+-&gt; 08/Jun/2015:23:46:01
+-&gt; 08/Jun/2015:23:4      # 并以此和uri拼接为uris的key
+-&gt; 08 Jun 2015:23:4
+-&gt; 08 Jun 2015 23:4      # 转换成/bin/date 能处理到样式
+-&gt; 08 Jun 2015 23:40:00  # 如 /bin/date -d &quot;08 Jun 2015 23:46:00&quot; +%s
+-&gt; to timestamp
+
+COMMENT
+
+cat access.log | awk -F&apos;[ ?]&apos; &apos;{
+    tm_str=substr($4,2,16);
+    uris[tm_str&quot; &quot;$7]++;
+} END {
+    for(k in uris) {
+        tm_str = substr(k, 1, 16)
+        gsub(/\//, &quot; &quot;, tm_str)
+        sub(/:/, &quot; &quot;, tm_str)
+        uri=substr(k, 18, length(k))
+        #sprintf(&quot;/bin/date -d \&quot;%s0:00\&quot; +%%s&quot;, tm_str) | getline tm;
+        sprintf(&quot;/bin/date -d \&quot;%s0:00\&quot; +%%Y-%%m-%%d\&quot; \&quot;%%H:%%M:%%S&quot;, tm_str) | getline tm;
+        printf(&quot;%s %s %d\n&quot;, tm, uri, uris[k])
+    }
+}&apos;
+</code></pre><p>输出结果:</p>
+<pre><code>$ bash nginx_access_log_analyse.sh 
+2015-06-08 23:40:00 / 1
+2015-06-08 23:40:00 /images/avatar.png 1
+</code></pre><p><a href="https://github.com/nextkitt/training/tree/master/shell/nginx" target="_blank" rel="external">查看源码</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/06/05/bnf/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/06/10/performance-test/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

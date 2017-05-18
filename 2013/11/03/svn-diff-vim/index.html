@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>让svn diff输出更友好 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="vim,svn," />
+  
+
+  <meta name="description" content="svn对本地文件和仓库文件作对比时，默认命令的行为和diff -U3 file.a file.b的输出结果类似，这种结果看得费心费神。有一种友好的输出方法：vimdiff。
+svn diff 默认输出：
+12345678910111213141516$ svn diff other/template.sh Index: other/template.sh======================">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让svn diff输出更友好">
+<meta property="og:url" content="http://nextkitt.github.io/2013/11/03/svn-diff-vim/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="svn对本地文件和仓库文件作对比时，默认命令的行为和diff -U3 file.a file.b的输出结果类似，这种结果看得费心费神。有一种友好的输出方法：vimdiff。
+svn diff 默认输出：
+12345678910111213141516$ svn diff other/template.sh Index: other/template.sh======================">
+<meta property="og:image" content="http://nextkitt.github.io/images/svn-vimdiff.png">
+<meta property="og:updated_time" content="2017-05-18T14:05:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="让svn diff输出更友好">
+<meta name="twitter:description" content="svn对本地文件和仓库文件作对比时，默认命令的行为和diff -U3 file.a file.b的输出结果类似，这种结果看得费心费神。有一种友好的输出方法：vimdiff。
+svn diff 默认输出：
+12345678910111213141516$ svn diff other/template.sh Index: other/template.sh======================">
+<meta name="twitter:image" content="http://nextkitt.github.io/images/svn-vimdiff.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改方法"><span class="toc-text">修改方法</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-svn-diff-vim" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">让svn diff输出更友好</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.11.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>svn对本地文件和仓库文件作对比时，默认命令的行为和<code>diff -U3 file.a file.b</code>的输出结果类似，这种结果看得费心费神。有一种友好的输出方法：vimdiff。</p>
+<p>svn diff 默认输出：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$ svn diff other/template.sh </div><div class="line"><span class="comment">Index: other/template.sh</span></div><div class="line"><span class="comment">===================================================================</span></div><div class="line"><span class="comment">--- other/template.sh	(revision 41427)</span></div><div class="line"><span class="comment">+++ other/template.sh	(working copy)</span></div><div class="line"><span class="meta">@@ -40,6 +40,9 @@</span></div><div class="line"> help)</div><div class="line">     usage 0;</div><div class="line">     ;;</div><div class="line"><span class="addition">+test)</span></div><div class="line"><span class="addition">+    func_test 0;</span></div><div class="line"><span class="addition">+    ;;</span></div><div class="line"> *)</div><div class="line">     usage;</div><div class="line">     ;;</div><div class="line">$</div></pre></td></tr></table></figure>
+<p>vimdiff 效果</p>
+<p><img src="/images/svn-vimdiff.png" alt=""></p>
+<h2 id="修改方法"><a href="#修改方法" class="headerlink" title="修改方法"></a>修改方法</h2><ol>
+<li>创建或修改 <code>~/.subversion/config</code></li>
+<li><p>向 <code>~/.subversion/config</code> 添加行<code>diff-cmd = svndiff</code></p>
+</li>
+<li><p>创建<code>～/bin/svndiff</code>并赋予可执行权限</p>
+</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">touch ~<span class="regexp">/bin/</span>svndiff</div><div class="line">chmod u+x ~<span class="regexp">/bin/</span>svndiff</div></pre></td></tr></table></figure>
+<p>svndiff的内容如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="comment"># 配置你喜欢的diff程序路径</span></div><div class="line">DIFF=<span class="string">"vimdiff"</span></div><div class="line"><span class="comment"># SVN diff命令会传入两个文件的参数 </span></div><div class="line">LEFT=<span class="variable">$&#123;6&#125;</span></div><div class="line">RIGHT=<span class="variable">$&#123;7&#125;</span></div><div class="line"><span class="comment"># 拼接成diff命令所需要的命令格式</span></div><div class="line"><span class="variable">$DIFF</span> <span class="variable">$LEFT</span> <span class="variable">$RIGHT</span></div></pre></td></tr></table></figure>
+<ol>
+<li><code>~/bin</code>添加到环境变量PATH中 不在环境变量PATH的值中，在<code>~/.bash_profile</code>中添加 </li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">PATH</span>=<span class="variable">$HOME</span>/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/10/16/short-url/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2013/11/04/markdown-to-doc-pcf/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

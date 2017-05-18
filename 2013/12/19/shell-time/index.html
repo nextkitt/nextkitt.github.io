@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell - time | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="shell," />
+  
+
+  <meta name="description" content="time实例time用于打印一条命令的执行时间。如：
+$ wc -l /etc/passwd
+43 /etc/passwd
+
+real    0m0.001s
+user    0m0.000s
+sys     0m0.000s
+time的real、user、sys的含义
+real指从程序运行开始到程序结束的总时间。
+user指程序本身，以及程序调用用户态库函数的执行时间。
+sys指程序直接或简介调">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell - time">
+<meta property="og:url" content="http://nextkitt.github.io/2013/12/19/shell-time/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="time实例time用于打印一条命令的执行时间。如：
+$ wc -l /etc/passwd
+43 /etc/passwd
+
+real    0m0.001s
+user    0m0.000s
+sys     0m0.000s
+time的real、user、sys的含义
+real指从程序运行开始到程序结束的总时间。
+user指程序本身，以及程序调用用户态库函数的执行时间。
+sys指程序直接或简介调">
+<meta property="og:updated_time" content="2017-05-18T14:08:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell - time">
+<meta name="twitter:description" content="time实例time用于打印一条命令的执行时间。如：
+$ wc -l /etc/passwd
+43 /etc/passwd
+
+real    0m0.001s
+user    0m0.000s
+sys     0m0.000s
+time的real、user、sys的含义
+real指从程序运行开始到程序结束的总时间。
+user指程序本身，以及程序调用用户态库函数的执行时间。
+sys指程序直接或简介调">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#time实例"><span class="toc-text">time实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#time的real、user、sys的含义"><span class="toc-text">time的real、user、sys的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如果将time的输出结果重定向到文件"><span class="toc-text">如果将time的输出结果重定向到文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-text">参考：</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-shell-time" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">shell - time</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.12.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="time实例"><a href="#time实例" class="headerlink" title="time实例"></a>time实例</h2><p>time用于打印一条命令的执行时间。如：</p>
+<pre><code>$ wc -l /etc/passwd
+43 /etc/passwd
+
+real    0m0.001s
+user    0m0.000s
+sys     0m0.000s
+</code></pre><h2 id="time的real、user、sys的含义"><a href="#time的real、user、sys的含义" class="headerlink" title="time的real、user、sys的含义"></a>time的real、user、sys的含义</h2><ol>
+<li>real指从程序运行开始到程序结束的总时间。</li>
+<li>user指程序本身，以及程序调用用户态库函数的执行时间。</li>
+<li>sys指程序直接或简介调用系统调用函数的执行时间。</li>
+</ol>
+<h2 id="如果将time的输出结果重定向到文件"><a href="#如果将time的输出结果重定向到文件" class="headerlink" title="如果将time的输出结果重定向到文件"></a>如果将time的输出结果重定向到文件</h2><p>time的输出为stderr，重定向的方法是运行子shell或将<code>time cmd</code>写到一个shell脚本中然后对脚本重定向。运行子shell方法`(cmds;)</p>
+<pre><code>#使用子shell
+$ (time wc -l /etc/passwd) 2&gt; log
+43 /etc/passwd
+$ cat log 
+
+real    0m0.002s
+user    0m0.000s
+sys 0m0.000s
+$ (time wc -l /etc/passwd) &amp;&gt; log
+$ cat log 
+43 /etc/passwd
+
+real    0m0.001s
+user    0m0.000s
+sys 0m0.000s
+
+#使用shell脚本
+$ echo &quot;time wc -l /etc/passwd&quot; &gt; t.sh
+$ cat t.sh 
+$ cat t.sh 
+time wc -l /etc/passwd
+$ bash t.sh &amp;&gt; log
+$ cat log 
+43 /etc/passwd
+
+real    0m0.001s
+user    0m0.000s
+sys 0m0.000s
+</code></pre><hr>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ul>
+<li><a href="http://blog.csdn.net/grantlee1988/article/details/7748554" target="_blank" rel="external">linux shell time用法简介</a></li>
+</ul>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/11/19/shell-awk/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2013/12/23/debug-web-browser/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell - 并行处理 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="shell," />
+  
+
+  <meta name="description" content="一个shell并行处理的demo，基于shell的&amp;amp;和wait实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell - 并行处理">
+<meta property="og:url" content="http://nextkitt.github.io/2015/05/24/shell-parallel/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="一个shell并行处理的demo，基于shell的&amp;amp;和wait实现。">
+<meta property="og:updated_time" content="2017-05-18T14:14:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell - 并行处理">
+<meta name="twitter:description" content="一个shell并行处理的demo，基于shell的&amp;amp;和wait实现。">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-shell-parallel" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">shell - 并行处理</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.05.24</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>一个shell并行处理的demo，基于shell的<code>&amp;</code>和<code>wait</code>实现。</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line">parallel=3; <span class="comment"># 并行数量</span></div><div class="line">work_dir=<span class="string">"/tmp/parallel"</span>;</div><div class="line">data_dir=<span class="string">"/tmp/parallel/data_dir"</span>;</div><div class="line"></div><div class="line"><span class="comment"># 生成测试数据</span></div><div class="line">mkdir -p <span class="variable">$data_dir</span>;</div><div class="line"><span class="built_in">cd</span> <span class="variable">$data_dir</span>; <span class="keyword">for</span>((i=0;i&lt;9;i++)) <span class="keyword">do</span> touch log.<span class="variable">$i</span>; <span class="keyword">done</span></div><div class="line"></div><div class="line">task_cell_prefix=<span class="string">"task_cell_"</span></div><div class="line">task_list=<span class="string">"<span class="variable">$work_dir</span>/task.list"</span>;</div><div class="line"></div><div class="line">ls <span class="variable">$data_dir</span>/<span class="built_in">log</span>* &gt; <span class="variable">$task_list</span>;</div><div class="line">split <span class="_">-l</span> <span class="variable">$parallel</span> <span class="variable">$task_list</span> <span class="variable">$task_cell_prefix</span>;</div><div class="line"></div><div class="line">ls <span class="variable">$&#123;work_dir&#125;</span>/<span class="variable">$&#123;task_cell_prefix&#125;</span>* | <span class="keyword">while</span> <span class="built_in">read</span> cell</div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> logfile <span class="keyword">in</span> $(cat <span class="string">"<span class="variable">$cell</span>"</span>)</div><div class="line">    <span class="keyword">do</span></div><div class="line">        &#123;</div><div class="line">            <span class="comment"># 业务逻辑</span></div><div class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$logfile</span> something."</span>; sleep 3</div><div class="line">        &#125;&amp;</div><div class="line">    <span class="keyword">done</span></div><div class="line"></div><div class="line">    <span class="built_in">wait</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$(/bin/date +"%Y-%m-%d %H:%M:%S")</span> <span class="variable">$cell</span> FINISH"</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<p>运行效果</p>
+<pre><code>$ bash test.sh 
+/tmp/parallel/data_dir/log.0 something.
+/tmp/parallel/data_dir/log.1 something.
+/tmp/parallel/data_dir/log.2 something.
+2015-05-24 21:10:21 /tmp/parallel/task_cell_aa FINISH
+/tmp/parallel/data_dir/log.3 something.
+/tmp/parallel/data_dir/log.4 something.
+/tmp/parallel/data_dir/log.5 something.
+2015-05-24 21:10:24 /tmp/parallel/task_cell_ab FINISH
+/tmp/parallel/data_dir/log.6 something.
+/tmp/parallel/data_dir/log.7 something.
+/tmp/parallel/data_dir/log.8 something.
+2015-05-24 21:10:27 /tmp/parallel/task_cell_ac FINISH
+$ 
+</code></pre>
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2014/08/08/wajingren/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/05/28/crontab/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

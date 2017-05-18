@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>挖井人要失业了 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nginx,openresty,高性能,高可用" />
+  
+
+  <meta name="description" content="挖井人即将失业。
+最近调研了 ucloud、 又拍云 和 七牛云存储 这三家的产品。
+ucloud
+云主机: 和linode类似，不过技术差一大截。
+带宽
+数据库: mysql, percona
+memory: redis, memcached
+负载均衡: 4层负载均衡
+CDN： 按流量计费，价格透明
+监控
+按购买产品和流量收费
+不需要签合同
+
+又拍云
+一系列图片解决方案：上传，下载，水印，尺寸，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="挖井人要失业了">
+<meta property="og:url" content="http://nextkitt.github.io/2014/08/08/wajingren/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="挖井人即将失业。
+最近调研了 ucloud、 又拍云 和 七牛云存储 这三家的产品。
+ucloud
+云主机: 和linode类似，不过技术差一大截。
+带宽
+数据库: mysql, percona
+memory: redis, memcached
+负载均衡: 4层负载均衡
+CDN： 按流量计费，价格透明
+监控
+按购买产品和流量收费
+不需要签合同
+
+又拍云
+一系列图片解决方案：上传，下载，水印，尺寸，">
+<meta property="og:updated_time" content="2017-05-18T14:13:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="挖井人要失业了">
+<meta name="twitter:description" content="挖井人即将失业。
+最近调研了 ucloud、 又拍云 和 七牛云存储 这三家的产品。
+ucloud
+云主机: 和linode类似，不过技术差一大截。
+带宽
+数据库: mysql, percona
+memory: redis, memcached
+负载均衡: 4层负载均衡
+CDN： 按流量计费，价格透明
+监控
+按购买产品和流量收费
+不需要签合同
+
+又拍云
+一系列图片解决方案：上传，下载，水印，尺寸，">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ucloud"><span class="toc-text">ucloud</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#又拍云"><span class="toc-text">又拍云</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七牛云存储"><span class="toc-text">七牛云存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-wajingren" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">挖井人要失业了</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2014.08.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/杂记/">杂记</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>挖井人即将失业。</p>
+<p>最近调研了 <a href="http://ucloud.cn" target="_blank" rel="external">ucloud</a>、 <a href="http://upyun.com" target="_blank" rel="external">又拍云</a> 和 <a href="http://qiniu.com" target="_blank" rel="external">七牛云存储</a> 这三家的产品。</p>
+<h2 id="ucloud"><a href="#ucloud" class="headerlink" title="ucloud"></a>ucloud</h2><ol>
+<li>云主机: 和<a href="http://linode.com" target="_blank" rel="external">linode</a>类似，不过技术差一大截。</li>
+<li>带宽</li>
+<li>数据库: mysql, percona</li>
+<li>memory: redis, memcached</li>
+<li>负载均衡: 4层负载均衡</li>
+<li>CDN： 按流量计费，价格透明</li>
+<li>监控</li>
+<li>按购买产品和流量收费</li>
+<li>不需要签合同</li>
+</ol>
+<h2 id="又拍云"><a href="#又拍云" class="headerlink" title="又拍云"></a>又拍云</h2><ol>
+<li>一系列图片解决方案：上传，下载，水印，尺寸，清晰度，旋转等等</li>
+<li>CDN</li>
+<li>按存储空间用量和流量收费</li>
+<li>不需要签合同</li>
+</ol>
+<h2 id="七牛云存储"><a href="#七牛云存储" class="headerlink" title="七牛云存储"></a>七牛云存储</h2><ol>
+<li>存储：图片，普通文件</li>
+<li>音视频解决方案：上传，转码，下载，防盗链，加速等等</li>
+<li>CDN</li>
+<li>按调用接口次数、存储空间用量和流量收费</li>
+<li>需要签合同</li>
+</ol>
+<p>（又拍云和七牛云存储应该是竞争对手。）</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>他们的特点是：</p>
+<ol>
+<li>为客户提供一整套的解决方案</li>
+<li>价格透明（可以到他们网站上去查，都是“明码标价”）</li>
+<li>减少前期资金投入：这三家的服务可以按小时或天或月或年收费。</li>
+<li>不是特点的特点：这三家的CDN都是使用网宿的服务（网宿这么diao）。</li>
+</ol>
+<p>使得客户减少了一部分人力成本和时间成本的投入，降低成本。减少了哪些人力：</p>
+<ol>
+<li>部分运维</li>
+<li>部分后台开发人员</li>
+</ol>
+<p>假如你要创办一个小型互联网公司，业务涉及图片及视频。</p>
+<ol>
+<li>你要找机房、测试、买带宽，找供应商买设备，谈价格，磁盘换了找供应商返修，机器挂了找机房等等，人力上一个人搞不下来。时间上估计两个星期也下不来。讨价还价一般运维也干不来。</li>
+<li>要维护这些设备，搞架构，搞监控，搞灾备。</li>
+<li>后台：搞上传，音视频转码，下载，播放，图片切图等等。</li>
+</ol>
+<p>使用现有的产品，你可以省去这些，也就意味者原先做这些工作的人要去其他公司另谋高就。</p>
+<p>打个不恰当的比方：</p>
+<blockquote>
+<p>20年前自来水还没有普及到农村，几乎每家院子里都有一口井（压水机），也能经常看见每家盖新房子的时候都会请挖井师傅们挖口井。而现在自来水的普及，导致那些挖井人另谋他路了。（我老家是山东农村，3年前县政府统一装铺了自来水。）</p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2014/06/21/shell-svn/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/05/24/shell-parallel/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
