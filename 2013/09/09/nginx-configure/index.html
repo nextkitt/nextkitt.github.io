@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>nginx configure 过程分析 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nginx," />
+  
+
+  <meta name="description" content="根据自己需求配置./configure选项，如安装目录，使用那些模块，禁用哪些模块、 通过一下方式查看。
+1./confugire --prefix=/your-dir/nginx --without-http-cache
+configure 脚本执行流程123456789101112131415161718192021222324252627282930313233343536373839404">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx configure 过程分析">
+<meta property="og:url" content="http://nextkitt.github.io/2013/09/09/nginx-configure/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="根据自己需求配置./configure选项，如安装目录，使用那些模块，禁用哪些模块、 通过一下方式查看。
+1./confugire --prefix=/your-dir/nginx --without-http-cache
+configure 脚本执行流程123456789101112131415161718192021222324252627282930313233343536373839404">
+<meta property="og:updated_time" content="2017-05-18T14:04:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx configure 过程分析">
+<meta name="twitter:description" content="根据自己需求配置./configure选项，如安装目录，使用那些模块，禁用哪些模块、 通过一下方式查看。
+1./confugire --prefix=/your-dir/nginx --without-http-cache
+configure 脚本执行流程123456789101112131415161718192021222324252627282930313233343536373839404">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#configure-脚本执行流程"><span class="toc-text">configure 脚本执行流程</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-nginx-configure" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">nginx configure 过程分析</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.09.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/后端/">后端</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>根据自己需求配置<code>./configure</code>选项，如安装目录，使用那些模块，禁用哪些模块、 通过一下方式查看。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./confugire --prefix=/your-dir/nginx --without-http-cache</div></pre></td></tr></table></figure>
+<h3 id="configure-脚本执行流程"><a href="#configure-脚本执行流程" class="headerlink" title="configure 脚本执行流程"></a><code>configure</code> 脚本执行流程</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">configure</div><div class="line"> |<span class="string"></span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/options # 路径、编译器、模块的默认开启关闭配置。命令行参数解析。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/init # 初始化objs下的 Makefile ngx_modules.c ngx_auto_headers.h ngx_auto_config.h等。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/sources # 定义头文件查找目录；定义核心模块的头文件、源码、依赖文件；定义其他模块的头文件和源码。</span></div><div class="line"> v</div><div class="line"> mkdir $NGX_OBJS</div><div class="line"> |</div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; 通过 have=xxx . auto/have; 的方式向 ngx_auto_config.h 写入宏定义。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; 通过 uname 判断内核、内核版本、主机的硬件架构</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/cc/conf # 定义编译器及为了跨平台而考虑的编译符号。</span></div><div class="line"> |<span class="string">    </span>|</div><div class="line"> |<span class="string">    </span>|<span class="string">-&gt; auto/cc/name</span></div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|</div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|<span class="string">-&gt; auto/feature #该脚本用来测试操作系统是否支持某些特性如：md5,</span></div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|</div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">-&gt; 测试方法：定义一个.c文件，制定头文件、链接库；通过或编译或执行，</span></div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">   并将是否编译通过或是否可执行，执行的返回值是0或非0，执行的输出结果判断操作系统是否支持某特性，</span></div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">   不支持报错或将结果写入ngx_auto_config.h。</span></div><div class="line"> |<span class="string">    </span>|<span class="string">    </span>|<span class="string">-&gt; NGX_CC_NAME=gcc</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/headers # 检测nginx项目所必须的系统头文件是否存在，并将存在的头文件写入 ngx_auto_headers.h 。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/os/conf # 检测并加载操作系统特性，Linux有：epoll、sendfile()、sendfile64()、</span></div><div class="line"> |<span class="string">   prctl()、sched_setaffinity()、crypt_r()；不同平台的cache_line。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/unix</span></div><div class="line"> |<span class="string">    </span>|</div><div class="line"> |<span class="string">    </span>|<span class="string">-&gt; 定义nginx进程运行时的所属用户和所属组。</span></div><div class="line"> |<span class="string">    </span>|<span class="string">-&gt; 检测 poll、/dev/poll、kqueue、crypt、fcntl、posix_fadvise、directio、statfs、statvfs、dlopen、sched_yield、</span></div><div class="line"> |<span class="string">    </span>|<span class="string">   setsockopt、getsockopt、accept4、aio、C types、POSIX types、字节序、syscalls, libc calls and some features。</span></div><div class="line"> v    </div><div class="line"> |<span class="string">-&gt; auto/modules # 根据以上结果定义模块源文件、头文件、依赖关系等。并将模块定义写入ngx_modules.c </span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; 路径信息写入 ngx_auto_config.h</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/make # 生成Makefile</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/lib/make # 生成Makefile</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/install # 生成Makefile，install、upgrade、manpage、build。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/stubs # 不知干什么的。</span></div><div class="line"> v</div><div class="line"> |<span class="string">-&gt; auto/summary # 输出汇总信息。</span></div><div class="line"> v</div><div class="line">end</div></pre></td></tr></table></figure>
+<!-- uname参见[这里] TODO -->
+<p><code>./configure</code>执行完成后，<code>objs/ngx_modules.c</code>中<code>ngx_modules[]</code>数组中定义的模块顺序决定了nginx运行时加载配置文件以及http经过哪些模块的处理顺序，不得更改。<br>如果使用第三方模块，可以通过<code>--add-module=PATH</code>添加。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/09/05/shell-ssh-params/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2013/10/16/short-url/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

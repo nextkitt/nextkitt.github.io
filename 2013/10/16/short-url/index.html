@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>ShortUrl的生成算法 | NextKitt的Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ShortUrl," />
+  
+
+  <meta name="description" content="什么是ShortUrl大家有没有疑惑过 在新浪微博、腾讯微博、QQ空间发表信息时，如果信息中包含url，该url会被转换成一个较短的url。如：
+12345学诚法师 [失败不可怕] http://qing.blog.sina.com.cn/1218353337/489e98b933004kof.htmlweib.com: http://t.cn/zRGMFHvt.qq.com: http://ur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ShortUrl的生成算法">
+<meta property="og:url" content="http://nextkitt.github.io/2013/10/16/short-url/index.html">
+<meta property="og:site_name" content="NextKitt的Blog">
+<meta property="og:description" content="什么是ShortUrl大家有没有疑惑过 在新浪微博、腾讯微博、QQ空间发表信息时，如果信息中包含url，该url会被转换成一个较短的url。如：
+12345学诚法师 [失败不可怕] http://qing.blog.sina.com.cn/1218353337/489e98b933004kof.htmlweib.com: http://t.cn/zRGMFHvt.qq.com: http://ur">
+<meta property="og:updated_time" content="2017-05-18T14:04:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ShortUrl的生成算法">
+<meta name="twitter:description" content="什么是ShortUrl大家有没有疑惑过 在新浪微博、腾讯微博、QQ空间发表信息时，如果信息中包含url，该url会被转换成一个较短的url。如：
+12345学诚法师 [失败不可怕] http://qing.blog.sina.com.cn/1218353337/489e98b933004kof.htmlweib.com: http://t.cn/zRGMFHvt.qq.com: http://ur">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/homepage.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是ShortUrl"><span class="toc-text">什么是ShortUrl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ShortUrl的原理"><span class="toc-text">ShortUrl的原理</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-short-url" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ShortUrl的生成算法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2013.10.16</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>nextkitt</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Web/">Web</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="什么是ShortUrl"><a href="#什么是ShortUrl" class="headerlink" title="什么是ShortUrl"></a>什么是<a href="http://en.wikipedia.org/wiki/URL_shortening" target="_blank" rel="external">ShortUrl</a></h2><p>大家有没有疑惑过 在新浪微博、腾讯微博、QQ空间发表信息时，如果信息中包含url，该url会被转换成一个较短的url。如：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">学诚法师 [失败不可怕] http:<span class="comment">//qing.blog.sina.com.cn/1218353337/489e98b933004kof.html</span></div><div class="line"></div><div class="line">weib<span class="selector-class">.com</span>: http:<span class="comment">//t.cn/zRGMFHv</span></div><div class="line">t<span class="selector-class">.qq</span><span class="selector-class">.com</span>: http:<span class="comment">//url.cn/PLRFux</span></div><div class="line">qzon<span class="selector-class">.qq</span><span class="selector-class">.com</span>: http:<span class="comment">//url.cn/PLRFux</span></div></pre></td></tr></table></figure>
+<p>还有<a href="http://www.youtube.com" target="_blank" rel="external">youtube视频</a>、<a href="http://www.youku.com" target="_blank" rel="external">youku视频</a>、<a href="http://www.tudou.com" target="_blank" rel="external">土豆视频</a>的videoID也有点ShortUrl的意思。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span><span class="comment">//www.youtube.com/watch?v=gA4vYw4lD6g 中的 gA4vYw4lD6g</span></div><div class="line"><span class="symbol">http:</span><span class="comment">//v.youku.com/v_show/id_XNjA5OTQyMzcy.html 中的 NjA5OTQyMzcy</span></div><div class="line"><span class="symbol">http:</span><span class="comment">//www.tudou.com/listplay/Mpga0NaET7k/w30cvc4udbk.html 中的 w30cvc4udbk</span></div></pre></td></tr></table></figure>
+<p>以上所看到的就是ShortUrl，把较长url压缩成固定长度的url的技术。我猜想ShortUrl应该是UI工作者发明的，就像微博上发一个N长的url总是没有短短十几个字符长度的url看着顺眼。</p>
+<h2 id="ShortUrl的原理"><a href="#ShortUrl的原理" class="headerlink" title="ShortUrl的原理"></a>ShortUrl的原理</h2><p>为每个url设定一个唯一整数n（可以是负数的），如使用数据库表的自增id，对n进行62进制64进制（或其他进制）转换。转换后的值就是ShortUrl的路径名。如<a href="http://convertxy.com/index.php/numberbases/" target="_blank" rel="external">在线进制数之间转换</a>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">十进制</th>
+<th style="text-align:center">62进制</th>
+<th style="text-align:center">64进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1048576</td>
+<td style="text-align:center">4OmW</td>
+<td style="text-align:center">EAAA</td>
+</tr>
+<tr>
+<td style="text-align:center">1048576</td>
+<td style="text-align:center">4OmW</td>
+<td style="text-align:center">EAAA</td>
+</tr>
+<tr>
+<td style="text-align:center">1048577</td>
+<td style="text-align:center">4OmX</td>
+<td style="text-align:center">EAAB</td>
+</tr>
+<tr>
+<td style="text-align:center">1073741824</td>
+<td style="text-align:center">1AfJIW</td>
+<td style="text-align:center">BAAAAA</td>
+</tr>
+<tr>
+<td style="text-align:center">107374182489</td>
+<td style="text-align:center">1tCd7t3</td>
+<td style="text-align:center">BkAAABZ</td>
+</tr>
+</tbody>
+</table>
+<p>常见的进制数有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">进制数</th>
+<th style="text-align:center">字符集合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2进制</td>
+<td style="text-align:center">01</td>
+</tr>
+<tr>
+<td style="text-align:center">8进制</td>
+<td style="text-align:center">01234567</td>
+</tr>
+<tr>
+<td style="text-align:center">10进制</td>
+<td style="text-align:center">0123456789</td>
+</tr>
+<tr>
+<td style="text-align:center">16进制</td>
+<td style="text-align:center">0123456789ABCDEF（不区分大小写）</td>
+</tr>
+</tbody>
+</table>
+<p>根据这种方式，由数字[0-9]、小字母[a-z]、大写字母[A-Z]、可用的标点符号可以组织出：2进制、3进制、…、36进制、…、62进制。其中2进制-36进制数不区分大小写，37进制-62进制区分大小写。如果加上标点符号如中划线-、下划线-或加号+、斜线/可以组织成64进制。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">进制数</th>
+<th style="text-align:center">字符集合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">16进制</td>
+<td style="text-align:center">0123456789ABCDEF（不区分大小写）</td>
+</tr>
+<tr>
+<td style="text-align:center">17进制</td>
+<td style="text-align:center">0123456789ABCDEFG（不区分大小写）</td>
+</tr>
+<tr>
+<td style="text-align:center">36进制</td>
+<td style="text-align:center">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</td>
+</tr>
+<tr>
+<td style="text-align:center">62进制</td>
+<td style="text-align:center">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</td>
+</tr>
+<tr>
+<td style="text-align:center">64进制</td>
+<td style="text-align:center">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_</td>
+</tr>
+</tbody>
+</table>
+<p>提供ShortUrl服务的网站：</p>
+<ul>
+<li><a href="http://tinyurl.com" target="_blank" rel="external">tinyurl.com</a></li>
+<li><a href="http://bit.ly" target="_blank" rel="external">bit.ly</a></li>
+<li><a href="http://tinyurl.com" target="_blank" rel="external">tinyurl.com</a></li>
+<li><a href="http://is.gd" target="_blank" rel="external">is.gd</a></li>
+<li><a href="http://goo.gl" target="_blank" rel="external">goo.gl</a></li>
+<li><a href="http://open.weibo.com/wiki/Short_url/shorten" target="_blank" rel="external">新浪微博API</a></li>
+<li><a href="http://3sd.me/" target="_blank" rel="external">3sd</a></li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li>github的<a href="https://github.com/mozillazg/ShortURL" target="_blank" rel="external">ShortURL</a>，ShortUrl的升级版本</li>
+<li>github的<a href="https://github.com/nileshk/url-shortener" target="_blank" rel="external">url-shortener</a>，标准X进制转换方法</li>
+<li><a href="http://convertxy.com/index.php/numberbases/" target="_blank" rel="external">标准X进制转换工具</a></li>
+<li><a href="http://pgregg.com/projects/php/base_conversion/base_conversion.inc.phps" target="_blank" rel="external">php版本标准进制转换工具的源码</a></li>
+<li><a href="http://en.wikipedia.org/wiki/URL_shortening" target="_blank" rel="external">wiki</a></li>
+</ul>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持nextkitt</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2013/09/09/nginx-configure/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
