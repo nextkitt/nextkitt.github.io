@@ -17,32 +17,20 @@
 
   <meta name="description" content="xmllint是linux命令行操作xml文档的工具，经常用来美化或紧凑输出xml文档。
 以 t.xml 文档为例：
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;root&amp;gt;
-    &amp;lt;code&amp;gt;0&amp;lt;/code&amp;gt;
-    &amp;lt;data&amp;gt;
-        &amp;lt;are">
+12345678910111213141516171819&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;root&amp;gt;   &amp;lt;code&amp;gt;0&amp;lt;/code&amp;gt;   &amp;lt;data&amp;gt;       &amp;lt;a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell - 处理xml文档">
 <meta property="og:url" content="http://nextkitt.github.io/2013/12/27/shell-xml/index.html">
 <meta property="og:site_name" content="NextKitt的Blog">
 <meta property="og:description" content="xmllint是linux命令行操作xml文档的工具，经常用来美化或紧凑输出xml文档。
 以 t.xml 文档为例：
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;root&amp;gt;
-    &amp;lt;code&amp;gt;0&amp;lt;/code&amp;gt;
-    &amp;lt;data&amp;gt;
-        &amp;lt;are">
-<meta property="og:updated_time" content="2017-05-18T14:11:39.000Z">
+12345678910111213141516171819&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;root&amp;gt;   &amp;lt;code&amp;gt;0&amp;lt;/code&amp;gt;   &amp;lt;data&amp;gt;       &amp;lt;a">
+<meta property="og:updated_time" content="2017-05-19T01:21:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shell - 处理xml文档">
 <meta name="twitter:description" content="xmllint是linux命令行操作xml文档的工具，经常用来美化或紧凑输出xml文档。
 以 t.xml 文档为例：
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;root&amp;gt;
-    &amp;lt;code&amp;gt;0&amp;lt;/code&amp;gt;
-    &amp;lt;data&amp;gt;
-        &amp;lt;are">
+12345678910111213141516171819&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;root&amp;gt;   &amp;lt;code&amp;gt;0&amp;lt;/code&amp;gt;   &amp;lt;data&amp;gt;       &amp;lt;a">
 
   
 
@@ -226,26 +214,8 @@
     
       <p><a href="http://xmlsoft.org/xmllint.html" target="_blank" rel="external">xmllint</a>是linux命令行操作xml文档的工具，经常用来美化或紧凑输出xml文档。</p>
 <p>以 t.xml 文档为例：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;root&gt;
-    &lt;code&gt;0&lt;/code&gt;
-    &lt;data&gt;
-        &lt;area&gt;华北&lt;/area&gt;
-        &lt;area_id&gt;100000&lt;/area_id&gt;
-        &lt;city&gt;北京市&lt;/city&gt;
-        &lt;city_id&gt;110000&lt;/city_id&gt;
-        &lt;country&gt;中国&lt;/country&gt;
-        &lt;country_id&gt;CN&lt;/country_id&gt;
-        &lt;county /&gt;
-        &lt;county_id&gt;-1&lt;/county_id&gt;
-        &lt;ip&gt;202.106.0.20&lt;/ip&gt;
-        &lt;isp&gt;联通&lt;/isp&gt;
-        &lt;isp_id&gt;100026&lt;/isp_id&gt;
-        &lt;region&gt;北京市&lt;/region&gt;
-        &lt;region_id&gt;110000&lt;/region_id&gt;
-    &lt;/data&gt;
-&lt;/root&gt;
-</code></pre><h2 id="紧凑xml文档"><a href="#紧凑xml文档" class="headerlink" title="紧凑xml文档"></a>紧凑xml文档</h2><p>紧凑一般用于网络传输，减少比不要的空白符。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">code</span>&gt;</span>0<span class="tag">&lt;/<span class="name">code</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">area</span>&gt;</span>华北<span class="tag">&lt;/<span class="name">area</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">area_id</span>&gt;</span>100000<span class="tag">&lt;/<span class="name">area_id</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">city</span>&gt;</span>北京市<span class="tag">&lt;/<span class="name">city</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">city_id</span>&gt;</span>110000<span class="tag">&lt;/<span class="name">city_id</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">country</span>&gt;</span>中国<span class="tag">&lt;/<span class="name">country</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">country_id</span>&gt;</span>CN<span class="tag">&lt;/<span class="name">country_id</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">county</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">county_id</span>&gt;</span>-1<span class="tag">&lt;/<span class="name">county_id</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">ip</span>&gt;</span>202.106.0.20<span class="tag">&lt;/<span class="name">ip</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">isp</span>&gt;</span>联通<span class="tag">&lt;/<span class="name">isp</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">isp_id</span>&gt;</span>100026<span class="tag">&lt;/<span class="name">isp_id</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">region</span>&gt;</span>北京市<span class="tag">&lt;/<span class="name">region</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">region_id</span>&gt;</span>110000<span class="tag">&lt;/<span class="name">region_id</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">data</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="紧凑xml文档"><a href="#紧凑xml文档" class="headerlink" title="紧凑xml文档"></a>紧凑xml文档</h2><p>紧凑一般用于网络传输，减少比不要的空白符。</p>
 <pre><code>$ xmllint --noblanks t.xml 
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;root&gt;&lt;code&gt;0&lt;/code&gt;&lt;data&gt;&lt;area&gt;华北&lt;/area&gt;&lt;area_id&gt;100000&lt;/area_id&gt;&lt;city&gt;北京市&lt;/city&gt;&lt;city_id&gt;110000&lt;/city_id&gt;&lt;country&gt;中国&lt;/country&gt;&lt;country_id&gt;CN&lt;/country_id&gt;&lt;county/&gt;&lt;county_id&gt;-1&lt;/county_id&gt;&lt;ip&gt;202.106.0.20&lt;/ip&gt;&lt;isp&gt;联通&lt;/isp&gt;&lt;isp_id&gt;100026&lt;/isp_id&gt;&lt;region&gt;北京市&lt;/region&gt;&lt;region_id&gt;110000&lt;/region_id&gt;&lt;/data&gt;&lt;/root&gt;
